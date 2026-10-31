@@ -1,0 +1,105 @@
+
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<style>
+.login-container {
+    max-width: 430px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #1b1b1b;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px #0005;
+}
+
+.login-logo {
+    text-align: center;
+    color: #ff4d00;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin: 15px 0 25px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    background: #292929;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 7px;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: #ff4d00;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    background: #ff4d00;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #d94000;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 22px;
+    color: #bbb;
+}
+
+.login-footer a {
+    color: #ff4d00;
+    text-decoration: none;
+}
+
+.errorlist {
+    color: #ff7777;
+}
+</style>
+
+<div class="login-container">
+    <div class="login-logo">AUTOWORLD</div>
+    <h2>Вход в аккаунт</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        <button type="submit" class="login-btn">
+            ВОЙТИ
+        </button>
+    </form>
+
+    <div class="login-footer">
+        Нет аккаунта?
+        <a href="{% url 'register' %}">Регистрация</a>
+    </div>
+</div>
+{% endblock %}

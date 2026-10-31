@@ -1,0 +1,405 @@
+
+{% extends 'blog/base.html' %}
+
+{% block title %}AutoWorld | Автомобильные новости{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ОСНОВНОЙ КОНТЕЙНЕР */
+
+    .aw-home {
+        background: #0b0c0f;
+        color: #f1f1f1;
+        min-height: 100vh;
+        padding-bottom: 60px;
+    }
+
+    .aw-container {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 0 25px;
+    }
+
+    /* ГЛАВНЫЙ БАННЕР */
+
+    .aw-hero {
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        background:
+            linear-gradient(90deg, rgba(8,9,12,.96) 5%, rgba(8,9,12,.75) 48%, rgba(8,9,12,.1)),
+            url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+            center/cover no-repeat;
+        border-bottom: 1px solid #292a30;
+    }
+
+    .aw-hero-content {
+        max-width: 650px;
+        padding: 65px 25px;
+    }
+
+    .aw-hero-label {
+        color: #ff5a24;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+
+    .aw-hero h1 {
+        color: #ffffff;
+        font-size: clamp(35px, 5vw, 58px);
+        line-height: 1.12;
+        margin: 20px 0;
+        font-weight: 900;
+    }
+
+    .aw-hero p {
+        color: #c2c2c8;
+        font-size: 17px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+    }
+
+    .aw-hero-button {
+        display: inline-block;
+        padding: 15px 28px;
+        background: #ff5a24;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 800;
+        transition: .25s;
+    }
+
+    .aw-hero-button:hover {
+        background: #e84917;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    /* ЗАГОЛОВОК СЕКЦИИ */
+
+    .aw-section {
+        padding-top: 65px;
+    }
+
+    .aw-section-heading {
+        margin-bottom: 30px;
+    }
+
+    .aw-section-heading span {
+        color: #ff5a24;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .aw-section-heading h2 {
+        color: #ffffff;
+        font-size: 32px;
+        margin: 10px 0;
+    }
+
+    .aw-section-heading p {
+        color: #85858d;
+        font-size: 14px;
+    }
+
+    /* КАРТОЧКИ СТАТЕЙ */
+
+    .aw-posts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 25px;
+    }
+
+    .aw-post-card {
+        background: #15161b;
+        border: 1px solid #292a30;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: .3s;
+    }
+
+    .aw-post-card:hover {
+        transform: translateY(-6px);
+        border-color: #ff5a24;
+        box-shadow: 0 12px 35px #00000055;
+    }
+
+    .aw-post-image {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        display: block;
+        background: #202127;
+    }
+
+    .aw-post-body {
+        padding: 24px;
+    }
+
+    .aw-post-category {
+        color: #ff5a24;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .aw-post-title {
+        display: block;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 21px;
+        line-height: 1.4;
+        font-weight: 800;
+        margin: 13px 0;
+    }
+
+    .aw-post-title:hover {
+        color: #ff5a24;
+    }
+
+    .aw-post-text {
+        color: #a5a5ad;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .aw-post-link {
+        display: inline-block;
+        margin-top: 18px;
+        color: #ff5a24;
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .aw-post-link:hover {
+        color: #ffffff;
+    }
+
+    /* КОММЕНТАРИИ */
+
+    .aw-comments {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #292a30;
+    }
+
+    .aw-comments-title {
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .aw-comment {
+        margin-bottom: 12px;
+        padding-left: 12px;
+        border-left: 2px solid #ff5a24;
+    }
+
+    .aw-comment-author {
+        color: #ff8a62;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .aw-comment-text {
+        color: #a5a5ad;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 4px;
+    }
+
+    .aw-no-comments {
+        color: #777780;
+        font-size: 12px;
+    }
+
+    /* ЕСЛИ НЕТ СТАТЕЙ */
+
+    .aw-empty {
+        padding: 40px;
+        text-align: center;
+        background: #15161b;
+        border: 1px solid #292a30;
+        border-radius: 12px;
+        color: #aaa;
+    }
+
+    /* АДАПТИВНОСТЬ */
+
+    @media (max-width: 900px) {
+        .aw-posts-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 600px) {
+        .aw-posts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .aw-hero {
+            min-height: 380px;
+        }
+
+        .aw-hero-content {
+            padding: 45px 25px;
+        }
+
+        .aw-section-heading h2 {
+            font-size: 26px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="aw-home">
+
+    <!-- ГЛАВНЫЙ БАННЕР -->
+
+    <section class="aw-hero">
+        <div class="aw-container">
+            <div class="aw-hero-content">
+
+                <div class="aw-hero-label">
+                    Automotive Community
+                </div>
+
+                <h1>
+                    МИР АВТОМОБИЛЕЙ НАЧИНАЕТСЯ ЗДЕСЬ
+                </h1>
+
+                <p>
+                    Новости автомобильного мира, технологии,
+                    программирование и всё, что связано с машинами.
+                </p>
+
+                <a href="#articles" class="aw-hero-button">
+                    Смотреть статьи
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- СТАТЬИ -->
+
+    <section class="aw-container aw-section" id="articles">
+
+        <div class="aw-section-heading">
+            <span>AutoWorld Magazine</span>
+            <h2>Последние публикации</h2>
+            <p>Интересные материалы из мира автомобилей и технологий.</p>
+        </div>
+
+        <div class="aw-posts-grid">
+
+            {% for post in posts %}
+
+                <article class="aw-post-card">
+
+                    {% if post.banner %}
+                        <img
+                            src="{{ post.banner.url }}"
+                            alt="{{ post.title }}"
+                            class="aw-post-image"
+                        >
+                    {% else %}
+                        {% if forloop.counter|divisibleby:2 %}
+                            <img
+                                src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80"
+                                alt="Автомобиль"
+                                class="aw-post-image"
+                            >
+                        {% else %}
+                            <img
+                                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"
+                                alt="Спортивный автомобиль"
+                                class="aw-post-image"
+                            >
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="aw-post-body">
+
+                        <div class="aw-post-category">
+                            AutoWorld / Статья
+                        </div>
+
+                        <a
+                            href="{% url 'post_detail' pk=post.pk %}"
+                            class="aw-post-title"
+                        >
+                            {{ post.title }}
+                        </a>
+
+                        <div class="aw-post-text">
+                            {{ post.text|truncatewords:25|linebreaksbr }}
+                        </div>
+
+                        <a
+                            href="{% url 'post_detail' pk=post.pk %}"
+                            class="aw-post-link"
+                        >
+                            Читать статью →
+                        </a>
+
+                        <!-- КОММЕНТАРИИ -->
+
+                        <div class="aw-comments">
+
+                            <div class="aw-comments-title">
+                                Комментарии ({{ post.comments.count }})
+                            </div>
+
+                            {% for comment in post.comments.all|slice:":2" %}
+                                <div class="aw-comment">
+
+                                    <div class="aw-comment-author">
+                                        {{ comment.author }}
+                                    </div>
+
+                                    <div class="aw-comment-text">
+                                        {{ comment.text|truncatewords:20 }}
+                                    </div>
+
+                                </div>
+                            {% empty %}
+                                <div class="aw-no-comments">
+                                    Пока нет комментариев.
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="aw-empty">
+                    <h3>Пока публикаций нет</h3>
+                    <p>Скоро здесь появятся новые автомобильные статьи.</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+
+{% extends 'blog/base.html' %}
+
+{% block title %}Добавить комментарий — AutoGarage{% endblock %}
+
+{% block content %}
+    <h2>Оставить комментарий</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Отправить комментарий</button>
+    </form>
+
+    <p><a href="/">Вернуться к новостям</a></p>
+{% endblock %}

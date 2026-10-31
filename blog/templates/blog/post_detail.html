@@ -1,0 +1,35 @@
+
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }} — AutoGarage{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+
+    <p>Автор: {{ post.author }}</p>
+    <p>Дата: {{ post.created_date|date:"d.m.Y H:i" }}</p>
+
+    <div>
+        {{ post.text|linebreaksbr }}
+    </div>
+
+    <hr>
+
+    <h2>Комментарии ({{ post.comments.count }})</h2>
+
+    {% for comment in post.comments.all %}
+        <div>
+            <strong>{{ comment.author }}</strong>
+            <small>{{ comment.created_date|date:"d.m.Y H:i" }}</small>
+            <p>{{ comment.text|linebreaksbr }}</p>
+        </div>
+    {% empty %}
+        <p>Комментариев пока нет. Будь первым!</p>
+    {% endfor %}
+
+    <a href="{% url 'add_comment_to_post' pk=post.pk %}">
+        Оставить комментарий
+    </a>
+
+    <p><a href="/">← Назад к новостям</a></p>
+{% endblock %}

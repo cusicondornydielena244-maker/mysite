@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}AutoWorld | Мир автомобилей{% endblock %}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #0b0c0f;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0c0f;
+            color: #f1f1f1;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .aw-header {
+            width: 100%;
+            background: #141519;
+            border-bottom: 1px solid #292a30;
+            position: relative;
+            z-index: 100;
+        }
+
+        .aw-header-inner {
+            max-width: 1450px;
+            min-height: 88px;
+            margin: 0 auto;
+            padding: 0 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        /* LOGO */
+
+        .aw-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .aw-logo-icon {
+            width: 43px;
+            height: 43px;
+            border: 2px solid #ff5a24;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff5a24;
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .aw-logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .aw-logo-name {
+            color: #ffffff;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .aw-logo-subtitle {
+            color: #85858d;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* NAVIGATION */
+
+        .aw-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 34px;
+        }
+
+        .aw-nav a {
+            position: relative;
+            color: #c7c7ce;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.25s;
+            padding: 10px 0;
+        }
+
+        .aw-nav a:not(.aw-register-btn)::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff5a24;
+            transition: width 0.25s;
+        }
+
+        .aw-nav a:not(.aw-register-btn):hover {
+            color: #ff5a24;
+        }
+
+        .aw-nav a:not(.aw-register-btn):hover::after {
+            width: 100%;
+        }
+
+        /* REGISTER BUTTON */
+
+        .aw-register-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 23px !important;
+            border-radius: 7px;
+            background: #ff5a24;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            transition: 0.25s !important;
+        }
+
+        .aw-register-btn:hover {
+            background: #e84917;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px #ff5a2433;
+        }
+
+        /* MAIN */
+
+        main {
+            min-height: calc(100vh - 180px);
+            background: #0b0c0f;
+            color: #f1f1f1;
+        }
+
+        /* FOOTER */
+
+        .aw-footer {
+            background: #141519;
+            border-top: 1px solid #292a30;
+            padding: 35px 25px;
+        }
+
+        .aw-footer-inner {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .aw-footer-brand {
+            color: #ff5a24;
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .aw-footer-description {
+            color: #85858d;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .aw-footer-copy {
+            color: #777780;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+            .aw-header-inner {
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .aw-nav {
+                flex-wrap: wrap;
+                gap: 15px 23px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .aw-nav {
+                gap: 12px 16px;
+            }
+
+            .aw-nav a {
+                font-size: 12px;
+            }
+
+            .aw-logo-name {
+                font-size: 20px;
+            }
+
+            .aw-register-btn {
+                padding: 10px 15px !important;
+            }
+
+            .aw-footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <header class="aw-header">
+        <div class="aw-header-inner">
+
+            <a href="/" class="aw-logo">
+                <div class="aw-logo-icon">A</div>
+
+                <div class="aw-logo-text">
+                    <span class="aw-logo-name">AUTOWORLD</span>
+                    <span class="aw-logo-subtitle">
+                        Automotive Community
+                    </span>
+                </div>
+            </a>
+
+            <nav class="aw-nav">
+                <a href="/">Главная</a>
+                <a href="/about/">О проекте</a>
+                <a href="/users/login/">Войти</a>
+
+                <a href="/users/register/" class="aw-register-btn">
+                    Регистрация
+                </a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="aw-footer">
+        <div class="aw-footer-inner">
+
+            <div>
+                <div class="aw-footer-brand">
+                    AUTOWORLD
+                </div>
+
+                <div class="aw-footer-description">
+                    Мир автомобилей начинается здесь.
+                </div>
+            </div>
+
+            <div class="aw-footer-copy">
+                © 2026 AutoWorld. Все права защищены.
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>
